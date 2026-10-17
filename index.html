@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>शुभ विवाह | Abhishek ❤ Mamta</title>
+
+<!--
+  CUSTOMIZATION NOTES
+  1. Media files: place "ganesh.jpg", "wedding.mp4", and "image1.jpg" through "image6.jpg" in the same folder as this HTML file.
+     image1 = bride (tall slot), image2 = groom (tall slot), image3–image6 = landscape shots.
+  2. Countdown / calendar target the Vivah time (2 Dec 2026, 4:00 AM) — search "2026-12-02T04:00:00" to change it.
+  3. Venue link: search the Google Maps URL under the Venue section to update it.
+  4. Colors live as CSS variables at the top of <style> under :root.
+  5. The "Our Story" section from the original template was left out since no story details were provided —
+     search "#family" to see where you could add one back in the same visual style if you'd like.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Tangerine:wght@400;700&family=Noto+Serif+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --paper: #F8F1EC;
+    --paper-deep: #F0E2DA;
+    --ink: #453034;
+    --ink-soft: #7A6265;
+    --rose: #C08497;
+    --rose-deep: #8C4B5E;
+    --sage: #8B9A7C;
+    --sage-deep: #66735A;
+    --gold: #B8935A;
+    --max-width: 1080px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .script {
+    font-family: 'Tangerine', cursive;
+    font-weight: 700;
+  }
+
+  .devanagari {
+    font-family: 'Noto Serif Devanagari', serif;
+  }
+
+  a { color: inherit; }
+
+  img { max-width: 100%; display: block; }
+
+  .eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: uppercase;
+    letter-spacing: 0.35em;
+    font-size: 0.78rem;
+    color: var(--rose-deep);
+    font-weight: 600;
+    margin: 0 0 0.75rem;
+  }
+
+  .eyebrow.devanagari { letter-spacing: 0.12em; text-transform: none; font-size: 1rem; }
+
+  .center { text-align: center; }
+
+  .muted { color: var(--ink-soft); }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  /* ---------- Icons (sprig + blossom) ---------- */
+  .sprig-icon, .blossom-icon {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: none;
+  }
+
+  /* ---------- Envelope overlay ---------- */
+  .envelope-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+  }
+
+  .envelope-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .envelope-scene {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .envelope-decor {
+    position: absolute;
+    width: clamp(50px, 8vw, 90px);
+    color: var(--sage);
+    opacity: 0.55;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .envelope-decor--left { left: clamp(-10px, -4vw, 10px); transform: translateY(-50%) rotate(-20deg); }
+  .envelope-decor--right { right: clamp(-10px, -4vw, 10px); transform: translateY(-50%) rotate(200deg) scaleX(-1); }
+
+  .envelope-wrap {
+    position: relative;
+    width: clamp(220px, 55vw, 320px);
+    aspect-ratio: 3 / 2;
+  }
+
+  .envelope-card {
+    position: absolute;
+    inset: 8% 10%;
+    background: var(--paper);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 26px rgba(69, 48, 52, 0.18);
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
+    z-index: 1;
+  }
+
+  .envelope-card-text {
+    font-size: clamp(1.7rem, 5.2vw, 2.4rem);
+    color: var(--rose-deep);
+    text-align: center;
+    padding: 0 0.5rem;
+  }
+
+  .envelope-body {
+    position: absolute;
+    inset: 0;
+    background: var(--rose-deep);
+    border-radius: 6px;
+    box-shadow: 0 20px 40px -12px rgba(69, 48, 52, 0.4);
+    transition: opacity 0.6s ease 0.35s, transform 0.6s ease 0.35s;
+    z-index: 0;
+  }
+
+  .envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56%;
+    background: var(--rose);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center;
+    transition: transform 0.6s ease 0.15s, opacity 0.6s ease 0.15s;
+    z-index: 2;
+  }
+
+  .envelope-seal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 0;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(69, 48, 52, 0.3);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    animation: seal-pulse 2.6s ease-in-out infinite;
+    z-index: 3;
+  }
+
+  .envelope-seal .blossom-icon { color: var(--paper); }
+
+  @keyframes seal-pulse {
+    0%, 100% { box-shadow: 0 4px 10px rgba(69, 48, 52, 0.3); }
+    50% { box-shadow: 0 4px 20px rgba(184, 147, 90, 0.6); }
+  }
+
+  .envelope-wrap.opened .envelope-seal { transform: translate(-50%, -50%) scale(0) rotate(35deg); opacity: 0; }
+  .envelope-wrap.opened .envelope-flap { transform: translateY(-100%) rotate(-6deg); opacity: 0; }
+  .envelope-wrap.opened .envelope-body { opacity: 0; transform: scale(0.96); }
+  .envelope-wrap.opened .envelope-card { opacity: 1; transform: scale(1); z-index: 4; }
+
+  .envelope-prompt {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+    animation: pulse-soft 2.6s ease-in-out infinite;
+  }
+
+  .envelope-prompt.fade-out {
+    animation: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 0.55; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-4px); }
+  }
+
+  /* ---------- Floating petals ---------- */
+  .petals-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    overflow: hidden;
+  }
+
+  .petal {
+    position: absolute;
+    top: -6vh;
+    border-radius: 0 60% 60% 60%;
+    animation-name: petal-fall;
+    animation-timing-function: ease-in;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes petal-fall {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); }
+    50% { transform: translateY(55vh) translateX(18px) rotate(180deg); }
+    100% { transform: translateY(115vh) translateX(-18px) rotate(360deg); }
+  }
+
+  /* ---------- Side nav ---------- */
+  .side-nav {
+    position: fixed;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .nav-dot {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--rose);
+    opacity: 0.4;
+    text-decoration: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .nav-dot.active { opacity: 1; transform: scale(1.3); background: var(--rose-deep); }
+
+  .nav-dot span {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.3rem 0.6rem;
+    border-radius: 3px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .nav-dot:hover span { opacity: 1; }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+  .details-cards .reveal:nth-child(1) { transition-delay: 0s; }
+  .details-cards .reveal:nth-child(2) { transition-delay: 0.08s; }
+  .details-cards .reveal:nth-child(3) { transition-delay: 0.16s; }
+  .details-cards .reveal:nth-child(4) { transition-delay: 0.24s; }
+  .details-cards .reveal:nth-child(5) { transition-delay: 0.32s; }
+  .details-cards .reveal:nth-child(6) { transition-delay: 0.4s; }
+  .details-cards .reveal:nth-child(7) { transition-delay: 0.48s; }
+
+  .gallery-grid .reveal:nth-child(1) { transition-delay: 0s; }
+  .gallery-grid .reveal:nth-child(2) { transition-delay: 0.08s; }
+  .gallery-grid .reveal:nth-child(3) { transition-delay: 0.16s; }
+  .gallery-grid .reveal:nth-child(4) { transition-delay: 0.24s; }
+  .gallery-grid .reveal:nth-child(5) { transition-delay: 0.32s; }
+  .gallery-grid .reveal:nth-child(6) { transition-delay: 0.4s; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    overflow: hidden;
+  }
+
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  .hero-video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(69, 48, 52, 0.68), rgba(69, 48, 52, 0.82));
+    z-index: 1;
+  }
+
+  .hero-decor { position: absolute; width: clamp(70px, 11vw, 130px); color: var(--sage); opacity: 0.5; z-index: 2; }
+  .hero-decor--left { top: 10%; left: 5%; transform: rotate(-18deg); }
+  .hero-decor--right { bottom: 10%; right: 5%; transform: rotate(162deg) scaleX(-1); }
+
+  .hero-content { position: relative; z-index: 2; }
+
+  .hero .eyebrow { color: var(--paper); opacity: 0.85; }
+
+  .hero-names {
+    font-size: clamp(3rem, 10vw, 6rem);
+    color: var(--paper);
+    margin: 0.5rem 0;
+    line-height: 1;
+  }
+
+  .hero-amp {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.55em;
+    color: var(--gold);
+    padding: 0 0.25em;
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--paper);
+    opacity: 0.85;
+    margin: 0.25rem 0 1.5rem;
+  }
+
+  .hero-meta {
+    font-size: 1rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--paper);
+  }
+
+  .dot-sep { color: var(--gold); margin: 0 0.75em; }
+
+  .scroll-cue {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 50px;
+    background: var(--paper);
+    opacity: 0.6;
+    z-index: 2;
+  }
+
+  .scroll-cue::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: scroll-drip 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-drip {
+    0% { bottom: 0; opacity: 1; }
+    100% { bottom: 100%; opacity: 0; }
+  }
+
+  /* ---------- Section layout ---------- */
+  .section-inner { max-width: var(--max-width); margin: 0 auto; padding: 6rem 1.5rem; }
+
+  .details { background: var(--paper); }
+  .family { background: var(--paper-deep); }
+  .gallery { background: var(--paper); }
+  .venue { background: var(--paper-deep); }
+
+  #events .section-inner { padding-bottom: 2rem; }
+  #gallery .section-inner { padding-top: 2rem; }
+
+  .section-title { font-size: clamp(2rem, 5vw, 2.75rem); color: var(--ink); margin-bottom: 1.25rem; }
+
+  .details-copy { max-width: 560px; margin: 0 auto; color: var(--ink-soft); }
+
+  /* ---------- Details / event cards ---------- */
+  .details-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    margin: 3rem 0;
+  }
+
+  .details-card {
+    background: var(--paper);
+    border: 1px solid rgba(140, 75, 94, 0.15);
+    border-radius: 10px;
+    padding: 2rem 1.25rem;
+    text-align: center;
+  }
+
+  .family .details-card { background: var(--paper); }
+
+  .details-card .blossom-icon.small { width: 30px; height: 30px; color: var(--rose); margin: 0 auto 0.9rem; }
+  .details-card h3 { font-size: 1.3rem; color: var(--rose-deep); margin-bottom: 0.6rem; }
+  .details-card p { margin: 0.3rem 0; }
+
+  /* ---------- Family card ---------- */
+  .family-card {
+    max-width: 640px;
+    margin: 3rem auto 0;
+    background: var(--paper);
+    border: 1px solid rgba(140, 75, 94, 0.15);
+    border-radius: 14px;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .family-names { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; color: var(--rose-deep); margin-bottom: 0.25rem; }
+  .family-parent { color: var(--ink-soft); margin-bottom: 1.1rem; }
+  .family-weds { font-size: 2.1rem; color: var(--gold); margin: 0.25rem 0 1.1rem; }
+  .family-mantra { margin-top: 2rem; font-style: italic; color: var(--ink-soft); line-height: 2; font-size: 1.05rem; }
+
+  /* ---------- Highlight video ---------- */
+  .highlight-video {
+    max-width: 760px;
+    margin: 1rem auto 0;
+  }
+
+  .highlight-video video {
+    width: 100%;
+    border-radius: 14px;
+    box-shadow: 0 16px 30px rgba(69, 48, 52, 0.2);
+  }
+
+  /* ---------- Countdown ---------- */
+  .countdown { text-align: center; margin: 3.5rem 0 2.5rem; }
+
+  .countdown-grid {
+    display: flex;
+    justify-content: center;
+    gap: clamp(1rem, 4vw, 2.5rem);
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .countdown-unit { display: flex; flex-direction: column; align-items: center; min-width: 64px; }
+
+  .countdown-unit span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
+    color: var(--rose-deep);
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .countdown-unit label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 0.4rem;
+  }
+
+  .btn-outline {
+    display: block;
+    width: fit-content;
+    margin: 2.5rem auto 0;
+    padding: 0.9rem 2.4rem;
+    background: transparent;
+    border: 1.5px solid var(--rose-deep);
+    color: var(--rose-deep);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .btn-outline:hover { background: var(--rose-deep); color: var(--paper); }
+
+  /* ---------- Gallery ---------- */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 160px;
+    gap: 1.25rem;
+    margin-top: 3rem;
+  }
+
+  .gallery-item--tall { grid-row: span 2; }
+
+  .gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background: linear-gradient(155deg, var(--paper-deep), var(--rose) 140%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    color: var(--paper);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .gallery-item:hover .gallery-placeholder {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 30px rgba(69, 48, 52, 0.2);
+  }
+
+  .gallery-placeholder .blossom-icon { width: 30px; height: 30px; }
+  .gallery-placeholder span { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; }
+
+  .gallery-photo {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .gallery-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery-item:hover .gallery-photo {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 30px rgba(69, 48, 52, 0.2);
+  }
+
+  .gallery-photo-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1.5rem 1rem 0.9rem;
+    background: linear-gradient(180deg, rgba(69, 48, 52, 0), rgba(69, 48, 52, 0.65));
+    color: var(--paper);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.06em;
+    text-align: center;
+  }
+
+  .gallery-photo { cursor: zoom-in; }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(35, 22, 24, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .lightbox-overlay.open { opacity: 1; visibility: visible; }
+
+  .lightbox-overlay img {
+    max-width: min(90vw, 900px);
+    max-height: 86vh;
+    width: auto;
+    border-radius: 8px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(248, 241, 236, 0.4);
+    background: rgba(248, 241, 236, 0.08);
+    color: var(--paper);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.25s ease;
+  }
+
+  .lightbox-close:hover { background: rgba(248, 241, 236, 0.2); }
+
+  /* ---------- Footer ---------- */
+  .site-footer {
+    text-align: center;
+    padding: 5rem 1.5rem 2.5rem;
+    background: var(--paper-deep);
+  }
+
+  .footer-sprig { width: 60px; height: 100px; margin: 0 auto 1.5rem; color: var(--sage); }
+  .footer-note { font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--ink-soft); margin: 0 0 0.5rem; }
+  .footer-names { font-size: 3rem; color: var(--rose-deep); margin: 0; }
+  .footer-date { margin: 0.5rem 0 0; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.85rem; color: var(--ink-soft); }
+  .footer-credit { margin-top: 2rem; color: #a99a9c; font-size: 0.75rem; letter-spacing: 0.05em; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    .side-nav { display: none; }
+  }
+
+  @media (max-width: 900px) {
+  .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); grid-auto-rows: 130px; }
+  .hero-decor { display: none; }
+  .details-cards { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .envelope-wrap, .envelope-seal, .envelope-flap, .envelope-body, .envelope-card,
+    .envelope-overlay, .reveal, .petal, .envelope-prompt, .scroll-cue::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Reusable line-art symbols -->
+<svg style="position:absolute; width:0; height:0; overflow:hidden;" aria-hidden="true">
+  <defs>
+    <symbol id="sprig" viewBox="0 0 120 200">
+      <path d="M60 190 C 55 150, 65 110, 55 70 C 50 40, 60 15, 60 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <ellipse cx="42" cy="150" rx="16" ry="7" transform="rotate(-35 42 150)" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <ellipse cx="76" cy="130" rx="16" ry="7" transform="rotate(35 76 130)" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <ellipse cx="40" cy="95" rx="14" ry="6" transform="rotate(-30 40 95)" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <ellipse cx="74" cy="75" rx="14" ry="6" transform="rotate(30 74 75)" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <circle cx="60" cy="18" r="5" fill="currentColor" opacity="0.15"/>
+      <circle cx="60" cy="5" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    </symbol>
+    <symbol id="blossom" viewBox="0 0 100 100">
+      <g fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="50" cy="32" r="14"/>
+        <circle cx="30" cy="55" r="14"/>
+        <circle cx="70" cy="55" r="14"/>
+        <circle cx="38" cy="72" r="14"/>
+        <circle cx="62" cy="72" r="14"/>
+      </g>
+      <circle cx="50" cy="54" r="7" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- Envelope opening overlay -->
+<div class="envelope-overlay" id="envelopeOverlay">
+  <div class="envelope-scene">
+    <svg class="sprig-icon envelope-decor envelope-decor--left" viewBox="0 0 120 200" aria-hidden="true"><use href="#sprig"></use></svg>
+    <svg class="sprig-icon envelope-decor envelope-decor--right" viewBox="0 0 120 200" aria-hidden="true"><use href="#sprig"></use></svg>
+
+    <div class="envelope-wrap" id="envelopeWrap">
+      <div class="envelope-card">
+        <span class="script envelope-card-text">Abhishek &amp; Mamta</span>
+      </div>
+      <div class="envelope-body"></div>
+      <div class="envelope-flap"></div>
+      <button class="envelope-seal" id="envelopeButton" aria-label="Open your invitation">
+        <svg class="blossom-icon" viewBox="0 0 100 100" aria-hidden="true"><use href="#blossom"></use></svg>
+      </button>
+    </div>
+
+    <p class="envelope-prompt" id="envelopePrompt">Tap the seal to open your invitation</p>
+  </div>
+</div>
+
+<!-- Ambient floating petals -->
+<div class="petals-container" id="petalsContainer" aria-hidden="true"></div>
+
+<!-- Side navigation -->
+<nav class="side-nav" aria-label="Section navigation">
+  <a href="#hero" class="nav-dot active" data-section="hero"><span>Home</span></a>
+  <a href="#family" class="nav-dot" data-section="family"><span>Family</span></a>
+  <a href="#events" class="nav-dot" data-section="events"><span>Events</span></a>
+  <a href="#gallery" class="nav-dot" data-section="gallery"><span>Gallery</span></a>
+  <a href="#venue" class="nav-dot" data-section="venue"><span>Venue</span></a>
+</nav>
+
+<!-- Hero -->
+<section id="hero" class="hero">
+  <video class="hero-video" autoplay muted loop playsinline id="bgVideo">
+    <source src="wedding.mp4" type="video/mp4">
+  </video>
+  <div class="hero-video-overlay"></div>
+
+  <svg class="sprig-icon hero-decor hero-decor--left" viewBox="0 0 120 200" aria-hidden="true"><use href="#sprig"></use></svg>
+  <svg class="sprig-icon hero-decor hero-decor--right" viewBox="0 0 120 200" aria-hidden="true"><use href="#sprig"></use></svg>
+  <div class="hero-content">
+    <p class="eyebrow devanagari">॥ शुभ विवाह ॥</p>
+    <h1 class="hero-names"><span class="script">Abhishek</span><span class="hero-amp">&amp;</span><span class="script">Mamta</span></h1>
+    <p class="hero-tagline">Together Forever</p>
+    <p class="hero-meta">2 December 2026<span class="dot-sep">&#8226;</span>SAS One Farms</p>
+  </div>
+  <a href="#family" class="scroll-cue" aria-label="Scroll to details"></a>
+</section>
+
+<!-- Family -->
+<section id="family" class="family">
+  <div class="section-inner">
+    <p class="eyebrow center devanagari">🕉️ श्री गणेशाय नमः</p>
+    <h2 class="section-title center">With Blessings, We Invite You</h2>
+    <p class="details-copy center">We would be so honored to have you with us as our families come together to celebrate the wedding of our children.</p>
+
+    <div class="family-card reveal">
+      <img src="ganesh.jpg" alt="Ganesh Ji" style="width:110px;height:110px;object-fit:cover;border-radius:50%;margin:0 auto 1.5rem;box-shadow:0 0 0 4px var(--paper-deep);">
+      <p class="family-names">Abhishek Kumar Yadav</p>
+      <p class="family-parent">Son of Parashuram singh</p>
+      <p class="script family-weds">weds</p>
+      <p class="family-names">Mamta Yadav</p>
+      <p class="family-parent">Daughter of Krishna Kumar</p>
+      <p class="family-mantra devanagari">वक्रतुण्ड महाकाय सूर्यकोटि समप्रभा।<br>निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा॥</p>
+    </div>
+  </div>
+</section>
+
+<!-- Events + Countdown -->
+<section id="events" class="details">
+  <div class="section-inner">
+    <p class="eyebrow center">The Celebration</p>
+    <h2 class="section-title center">Wedding Events</h2>
+    <p class="details-copy center">A full week of celebrations — we'd love for you to join us for as many as you can.</p>
+
+    <div class="details-cards">
+      <div class="details-card reveal">
+        <svg class="blossom-icon small" viewBox="0 0 100 100" aria-hidden="true"><use href="#blossom"></use></svg>
+        <h3>Tilak</h3>
+        <p>25 November 2026<br>6:30 PM</p>
+      </div>
+      <div class="details-card reveal">
+        <svg class="blossom-icon small" viewBox="0 0 100 100" aria-hidden="true"><use href="#blossom"></use></svg>
+        <h3>Mehndi</h3>
+        <p>29 November 2026<br>11:30 AM</p>
+      </div>
+      <div class="details-card reveal">
+        <svg class="blossom-icon small" viewBox="0 0 100 100" aria-hidden="true"><use href="#blossom"></use></svg>
+        <h3>Sangeet</h3>
+        <p>29 November 2026<br>6:30 PM</p>
+      </div>
+      <div class="details-card reveal">
+        <svg class="blossom-icon small" viewBox="0 0 100 100" aria-hidden="true"><use href="#blossom"></use></svg>
+        <h3>Haldi</h3>
+        <p>30 November 2026</p>
+      </div>
+      <div class="details-card reveal">
+        <svg class="blossom-icon small" viewBox="0 0 100 100" aria-hidden="true"><use href="#blossom"></use></svg>
+        <h3>Vivah</h3>
+        <p>2 December 2026<br>4:00 PM</p>
+      </div>
+    </div>
+
+    <div class="highlight-video reveal">
+      <video controls playsinline id="highlightVideo">
+        <source src="wedding.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="countdown reveal">
+      <p class="eyebrow center">Counting Down To The Vivah</p>
+      <div class="countdown-grid">
+        <div class="countdown-unit"><span id="cd-days">00</span><label>Days</label></div>
+        <div class="countdown-unit"><span id="cd-hours">00</span><label>Hours</label></div>
+        <div class="countdown-unit"><span id="cd-mins">00</span><label>Minutes</label></div>
+        <div class="countdown-unit"><span id="cd-secs">00</span><label>Seconds</label></div>
+      </div>
+    </div>
+
+    <button class="btn-outline reveal" id="addToCalendar">Add to Calendar</button>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery" class="gallery">
+  <div class="section-inner">
+    <p class="eyebrow center">Moments</p>
+    <h2 class="section-title center">A Few Favorites</h2>
+    <p class="details-copy center">Our Family.</p>
+
+    <div class="gallery-grid">
+      <div class="gallery-item gallery-item--tall reveal">
+        <div class="gallery-photo">
+          <img src="image5.JPG" alt="Mamta">
+          <div class="gallery-photo-caption">Mamta</div>
+        </div>
+      </div>
+      <div class="gallery-item reveal">
+        <div class="gallery-photo">
+          <img src="image6.JPG" alt="Wedding moment">
+        </div>
+      </div>
+      <div class="gallery-item reveal">
+        <div class="gallery-photo">
+          <img src="image2.JPG" alt="Wedding moment">
+        </div>
+      </div>
+      <div class="gallery-item reveal">
+        <div class="gallery-photo">
+          <img src="image1.JPG" alt="Wedding moment">
+        </div>
+      </div>
+      <div class="gallery-item gallery-item--tall reveal">
+        <div class="gallery-photo">
+          <img src="image4.JPG" alt="Abhishek">
+          <div class="gallery-photo-caption">Abhishek</div>
+        </div>
+      </div>
+      <div class="gallery-item reveal">
+        <div class="gallery-photo">
+          <img src="Image3.JPG" alt="Wedding moment">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Venue -->
+<section id="venue" class="venue">
+  <div class="section-inner">
+    <p class="eyebrow center">The Venue</p>
+    <h2 class="section-title center">SAS One Farms</h2>
+    <p class="details-copy center">We can't wait to host you for our celebrations.</p>
+    <a class="btn-outline reveal" href="https://maps.app.goo.gl/f33K9WHWEhPQK4F28" target="_blank" rel="noopener">Get Directions</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <svg class="sprig-icon footer-sprig" viewBox="0 0 120 200" aria-hidden="true"><use href="#sprig"></use></svg>
+  <p class="footer-note">We look forward to celebrating with you</p>
+  <p class="script footer-names">Abhishek &amp; Mamta</p>
+  <p class="footer-date">2 December 2026</p>
+  <p class="footer-credit">Created by Abhimanyu</p>
+</footer>
+
+<!-- Lightbox for gallery photos -->
+<div class="lightbox-overlay" id="lightboxOverlay">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close photo">&times;</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Envelope open interaction ---------- */
+  var overlay = document.getElementById('envelopeOverlay');
+  var wrap = document.getElementById('envelopeWrap');
+  var button = document.getElementById('envelopeButton');
+  var prompt = document.getElementById('envelopePrompt');
+
+  document.body.style.overflow = 'hidden';
+
+  function openEnvelope() {
+    if (wrap.classList.contains('opened')) return;
+    wrap.classList.add('opened');
+    prompt.classList.add('fade-out');
+    button.disabled = true;
+    button.setAttribute('aria-hidden', 'true');
+
+    var closeDelay = reduceMotion ? 80 : 1300;
+    window.setTimeout(function () {
+      overlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    }, closeDelay);
+  }
+
+  button.addEventListener('click', openEnvelope);
+
+  /* ---------- Floating petals ---------- */
+  function createPetals() {
+    if (reduceMotion) return;
+    var container = document.getElementById('petalsContainer');
+    var colors = ['var(--rose)', 'var(--rose-deep)', 'var(--gold)'];
+    var count = 16;
+    for (var i = 0; i < count; i++) {
+      var petal = document.createElement('span');
+      petal.className = 'petal';
+      var size = Math.random() * 10 + 8;
+      petal.style.width = size + 'px';
+      petal.style.height = size + 'px';
+      petal.style.left = (Math.random() * 100) + 'vw';
+      petal.style.background = colors[Math.floor(Math.random() * colors.length)];
+      petal.style.animationDuration = (Math.random() * 8 + 10) + 's';
+      petal.style.animationDelay = (Math.random() * 10) + 's';
+      petal.style.opacity = (Math.random() * 0.4 + 0.35).toFixed(2);
+      container.appendChild(petal);
+    }
+  }
+  createPetals();
+
+  /* ---------- Scroll reveal ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function (el) { revealObserver.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  /* ---------- Side nav active state ---------- */
+  var sections = document.querySelectorAll('section[id]');
+  var navDots = document.querySelectorAll('.nav-dot');
+  if ('IntersectionObserver' in window) {
+    var navObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          navDots.forEach(function (dot) {
+            dot.classList.toggle('active', dot.dataset.section === id);
+          });
+        }
+      });
+    }, { threshold: 0.5 });
+    sections.forEach(function (sec) { navObserver.observe(sec); });
+  }
+
+  /* ---------- Countdown (targets the Vivah) ---------- */
+  var target = new Date('2026-12-02T04:00:00').getTime();
+  var daysEl = document.getElementById('cd-days');
+  var hoursEl = document.getElementById('cd-hours');
+  var minsEl = document.getElementById('cd-mins');
+  var secsEl = document.getElementById('cd-secs');
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function updateCountdown() {
+    var diff = target - Date.now();
+    if (diff <= 0) {
+      daysEl.textContent = '00';
+      hoursEl.textContent = '00';
+      minsEl.textContent = '00';
+      secsEl.textContent = '00';
+      return;
+    }
+    var days = Math.floor(diff / 86400000);
+    var hours = Math.floor((diff % 86400000) / 3600000);
+    var mins = Math.floor((diff % 3600000) / 60000);
+    var secs = Math.floor((diff % 60000) / 1000);
+    daysEl.textContent = pad(days);
+    hoursEl.textContent = pad(hours);
+    minsEl.textContent = pad(mins);
+    secsEl.textContent = pad(secs);
+  }
+  updateCountdown();
+  window.setInterval(updateCountdown, 1000);
+
+  /* ---------- Add to calendar ---------- */
+  var calBtn = document.getElementById('addToCalendar');
+  calBtn.addEventListener('click', function () {
+    var lines = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'BEGIN:VEVENT',
+      'SUMMARY:Mamta \u0026 Abhishek\u2019s Wedding \u2014 Vivah',
+      'DTSTART:20261202T040000',
+      'DTEND:20261202T080000',
+      'LOCATION:SAS One Farms',
+      'DESCRIPTION:We look forward to celebrating with you!',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ];
+    var blob = new Blob([lines.join('\r\n')], { type: 'text/calendar' });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = 'mamta-and-abhishek-wedding.ics';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  });
+
+  /* ---------- Gallery lightbox ---------- */
+  var lightbox = document.getElementById('lightboxOverlay');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxClose = document.getElementById('lightboxClose');
+  var galleryImgs = document.querySelectorAll('.gallery-photo img');
+
+  function openLightbox(src, alt) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    lightboxImg.src = '';
+  }
+
+  galleryImgs.forEach(function (img) {
+    img.addEventListener('click', function () {
+      openLightbox(img.getAttribute('src'), img.getAttribute('alt'));
+    });
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+  });
+
+  /* ---------- Highlight video: play in view, pause out of view ---------- */
+  var highlightVideo = document.getElementById('highlightVideo');
+  if (highlightVideo && 'IntersectionObserver' in window) {
+    var videoObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          highlightVideo.play().catch(function () {});
+        } else {
+          highlightVideo.pause();
+        }
+      });
+    }, { threshold: 0.5 });
+    videoObserver.observe(highlightVideo);
+  }
+})();
+</script>
+
+</body>
+</html>
